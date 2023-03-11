@@ -13,17 +13,32 @@ import netCDF4 as nc
 import sys
 
 if __name__ =="__main__":
-    # a = []
-    # for i in range(1, len(sys.argv)):
-    #     a.append(sys.argv[i])     
-    # filePath = a[0]
-    
-    filePath = r"D:\\work\\wrfout_d01_2021-11-08_00_00_00"
+    a = []
+    for i in range(1, len(sys.argv)):
+        a.append(sys.argv[i])     
+    filePath = a[0]
+    # filePath = r"D:\\work\\wrfout_d01_2021-11-08_00_00_00.nc"
     file = nc.Dataset(filePath,'r')
     Params = list(file.variables.keys())
     for Param in Params:
         dim = list(file[Param].dimensions)
-        if ("west_east" in dim or  "west_east_stag" in dim) and ()
+        # print(Param)
+        if ("west_east" in dim or  "west_east_stag" in dim) and ("south_north" in dim or  "south_north_stag" in dim):
+            time = "0"
+            level = "0"
+            if("Time" in dim):
+                time = str(file.dimensions["Time"].size)
+            if("bottom_top_stag" in dim):
+                level = str(file.dimensions["bottom_top_stag"].size)
+            if("bottom_top" in dim):
+                level = str(file.dimensions["bottom_top"].size)
+            print(Param + "#" + time + "#" + level)
+            
+    
+        
+        
+            
+                
         
     
     
