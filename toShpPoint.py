@@ -29,8 +29,25 @@ class tooPoint():
         srs.ImportFromEPSG(4326) ## 空
         layer = data_source.CreateLayer(self.layername , srs, ogr.wkbPoint)
         
-        for fieldname in self.fieldnames:      
-            layer.CreateField(ogr.FieldDefn(fieldname, ogr.OFTReal))
+        # for fieldname in self.fieldnames: 
+        #     layer.CreateField(ogr.FieldDefn(fieldname, ogr.OFTReal))
+        # for i in range(len(self.fieldnames)):
+        #     if isinstance(self.value[0][i],np.int32):
+        #         layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTInteger))
+        #     if isinstance(self.value[0][i],float) or isinstance(self.value[0][i],np.float32):
+        #         layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTReal))
+        #     if isinstance(self.value[0][i],str) or isinstance(self.value[0][i],bytes): 
+        #         layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTString))    
+        for i in range(len(self.fieldnames)):
+            # if isinstance(self.value[0][i],np.int32):
+            #     layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTInteger))
+            # if isinstance(self.value[0][i],float) or isinstance(self.value[0][i],np.float32):
+            #     layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTReal))
+            if isinstance(self.value[0][i],str): 
+                layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTString))   
+            else:
+                layer.CreateField(ogr.FieldDefn(self.fieldnames[i], ogr.OFTReal))
+        
         if self.lons.ndim == 1:
             for i in range(len(self.lons)):
                 feature = ogr.Feature(layer.GetLayerDefn())
